@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>File Byte Checker</title>
+</head>
+<body>
+
+<input type="file" id="file-input" />
+
+<script src="../../dist/browser/FileWorker.js"></script>
+
+<script>
+
+    function byteProcessor(reader, writer) {
+        reader.onData = function (data) {
+            writer.write("File Size: " + data.byteLength);
+        };
+        reader.readAll();
+    }
+
+    document.getElementById("file-input").addEventListener("change", function(e) {
+        if (this.files.length > 0) {
+            var file = this.files[0];
+
+            var resultPromise = FileWorker.readFile(file, byteProcessor);
+
+            resultPromise.then(function(result) {
+                console.log(result);
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

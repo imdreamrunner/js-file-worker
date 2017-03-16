@@ -1,0 +1,14 @@
+{
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "compilerOptions": {
+    "lib": ["ES6", "DOM"],
+    "noImplicitAny": true,
+    "target": "es5",
+    "declaration": true
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "file-worker",
+  "version": "0.0.7",
+  "description": "Process files asynchronous at browser with web worker.",
+  "main": "dist/commonjs/index.js",
+  "types": "dist/commonjs/index.d.ts",
+  "scripts": {
+    "test": "./node_modules/.bin/gulp test",
+    "build": "./node_modules/.bin/gulp build"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imdreamrunner/js-file-worker"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-amdclean": "^1.1.1",
+    "gulp-typescript": "^3.1.5",
+    "gulp-webserver": "^0.9.1",
+    "jasmine-core": "^2.5.2",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-firefox-launcher": "^1.0.1",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-safari-launcher": "^1.0.0",
+    "merge2": "^1.0.3",
+    "typescript": "^2.2.1"
+  },
+  "dependencies": {
+    "karma": "^1.5.0"
+  }
+}
