@@ -12,7 +12,7 @@
 
     function byteProcessor(reader, writer) {
         reader.onData = function (data) {
-            writer.write("File Size: " + data.byteLength);
+            writer.writeOnce("File Size: " + data.byteLength);
         };
         reader.readAll();
     }
@@ -24,7 +24,7 @@
             var resultPromise = FileWorker.readFile(file, byteProcessor);
 
             resultPromise.then(function(result) {
-                console.log(result);
+                alert(result);
             });
         }
     });
