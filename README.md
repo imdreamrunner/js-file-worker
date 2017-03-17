@@ -64,7 +64,7 @@ that does exactly the same thing.
 ```javascript
 function md5Processor(reader, writer) {
     reader.onData = function (bytes) {
-        writer.write(computeMD5(bytes));
+        writer.writeOnce(computeMD5(bytes));
     };
     reader.readAll();
 }
