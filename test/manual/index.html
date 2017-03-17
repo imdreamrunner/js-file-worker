@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 <head>
     <title>File Byte Checker</title>
@@ -6,7 +7,12 @@
 
 <input type="file" id="file-input" />
 
-<script src="../../dist/browser/FileWorker.min.js"></script>
+<script>
+  // For IE
+  window.Promise || document.write('<script src="https://unpkg.com/es6-promise@3.2.1/dist/es6-promise.min.js"><\/script>');
+</script>
+
+<script src="../../dist/browser/FileWorker.js"></script>
 
 <script>
 

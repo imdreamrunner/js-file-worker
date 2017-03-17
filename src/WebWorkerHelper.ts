@@ -3,6 +3,8 @@ import {FileWorkerWriter, FileWorkerProcessor, FileWorkerReader, FileWorkerOnDat
 declare const self : MessagePort;
 declare const __PROCESSOR__ : any;
 declare const FileReaderSync : any;
+declare const window : any;
+declare const BlobBuilder : any;
 
 function workerScript() {
     const processor : FileWorkerProcessor = __PROCESSOR__;
@@ -67,10 +69,25 @@ function workerScript() {
 }
 
 export function createWebWorker(processor: Function) : Worker {
-    var workerFunctionString: string = workerScript.toString();
+    let workerFunctionString: string = workerScript.toString();
     workerFunctionString = workerFunctionString.replace('__PROCESSOR__', processor.toString());
-    const blobURL = URL.createObjectURL(new Blob([`(${workerFunctionString})()`], {type: 'application/javascript'}));
+    workerFunctionString = `(${workerFunctionString})()`;
+    // http://stackoverflow.com/questions/10343913/how-to-create-a-web-worker-from-a-string
+    let blob;
+    try {
+        blob = new Blob([workerFunctionString], {type: 'application/javascript'});
+    } catch (e) {
+        // Backwards-compatibility
+        window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+        blob = new BlobBuilder();
+        blob.append(workerFunctionString);
+        blob = blob.getBlob();
+    }
+    window.URL = window.URL || window.webkitURL;  // Backwards-compatibility
+
+    const blobURL = URL.createObjectURL(blob);
     const worker = new Worker(blobURL);
-    URL.revokeObjectURL(blobURL);
+    // Do not revoke object URL. otherwise IE and edge doesn't work.
+    // URL.revokeObjectURL(blobURL);
     return worker;
 }
