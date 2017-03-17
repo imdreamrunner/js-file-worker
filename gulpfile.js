@@ -1,9 +1,11 @@
 const gulp = require('gulp');
 const ts = require("gulp-typescript");
-var merge2 = require("merge2");
-var amdclean = require("gulp-amdclean");
-var Server = require('karma').Server;
-var webserver = require("gulp-webserver");
+const merge2 = require("merge2");
+const amdclean = require("gulp-amdclean");
+const Server = require('karma').Server;
+const webserver = require("gulp-webserver");
+const uglify = require('gulp-uglify');
+const rename = require("gulp-rename");
 
 gulp.task('build-commonjs', () => {
   // Build CommonJS library.
@@ -18,7 +20,7 @@ gulp.task('build-commonjs', () => {
 });
 
 
-gulp.task("build-amd", function () {
+gulp.task("build-amd", () => {
   // Build CommonJS library.
   var tsProject = ts.createProject("tsconfig.json", {
     module: "amd",
@@ -31,7 +33,7 @@ gulp.task("build-amd", function () {
   ]);
 });
 
-gulp.task("build-browser", ["build-amd"], function () {
+gulp.task("build-browser", ["build-amd"], () => {
   // Build library for browser.
   return gulp
     .src(["dist/amd/FileWorker.js"])
@@ -44,6 +46,15 @@ gulp.task("build-browser", ["build-amd"], function () {
         end: "\nglobal.FileWorker=index.default;}(window));"
       }
     }))
+    .pipe(gulp.dest("dist/browser"));
+});
+
+gulp.task("build-browser-minify", ["build-browser"], () => {
+  // Build library for browser.
+  return gulp
+    .src(["dist/browser/FileWorker.js"])
+    .pipe(uglify())
+    .pipe(rename('FileWorker.min.js'))
     .pipe(gulp.dest("dist/browser"));
 });
 
@@ -74,6 +85,6 @@ gulp.task("webserver", () => {
     }));
 });
 
-gulp.task('build', ['build-commonjs', 'build-browser']);
+gulp.task('build', ['build-commonjs', 'build-browser', 'build-browser-minify']);
 
 gulp.task('default', ['build']);
