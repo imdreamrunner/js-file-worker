@@ -1,6 +1,6 @@
 {
   "name": "file-worker",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Process files asynchronous at browser with web worker.",
   "main": "dist/commonjs/index.js",
   "types": "dist/commonjs/index.d.ts",

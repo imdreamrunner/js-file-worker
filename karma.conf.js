@@ -16,7 +16,6 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'dist/browser/**/*.js',
-      'test/browser/**/*.js',
       'test/browser/**/*.js'
     ],
 
@@ -57,7 +56,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'Firefox'],
 
 
     // Continuous Integration mode
@@ -67,5 +66,11 @@ module.exports = function(config) {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
-}
+  });
+
+  if(process.env.TRAVIS) {
+    config.set({
+      browsers: ['Firefox']
+    });
+  }
+};
