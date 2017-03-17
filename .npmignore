@@ -3,3 +3,4 @@
 test/
 gulpfile.*
 karma.*
+/misc

@@ -1,6 +1,8 @@
 JavaScript File Worker
 ======================
 
+![JavaScript File Worker](misc/banner.png)
+
 ***Process files asynchronously by Web Worker in browsers.***
 
 Web Worker is a browser technology that allow some JavaScript code
